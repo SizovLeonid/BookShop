@@ -1,16 +1,16 @@
 import Book from '../../components/book/book';
 import BooksCollection from '../../components/booksCollection/booksCollection';
+import CartBook from '../../components/cartBook/cartBook';
 import { connect } from 'react-redux';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
-import HomeSlider from '../../components/slider/slider';
 import Interesting from '../../components/interesting/interesting';
 import Menu from '../../components/menu/menu';
 import PropTypes from 'prop-types';
 import React from 'react';
-import './home.less';
+import './cart.less';
 
-class Home extends React.Component {
+class Cart extends React.Component {
   constructor(props) {
     super(props);
     this.ClickMenu = this.ClickMenu.bind(this);
@@ -37,10 +37,10 @@ class Home extends React.Component {
     this.setState({ modalFlag: false });
   }
 
-  NewList() {
-    return this.props.newBooks.map((book) => {
+  CartList() {
+    return this.props.cartBooks.map((book) => {
       return (
-        <Book key={book.id} name={book.nameBook} price={book.priceBook} img={book.imgBook} description={book.description} callBack={this.openCloseScreen} close={this.closeScreen}/>
+        <CartBook key={book.id} name={book.nameBook} price={book.priceBook} img={book.imgBook} description={book.description} callBack={this.openCloseScreen} close={this.closeScreen}/>
       );
     });
   }
@@ -68,8 +68,7 @@ class Home extends React.Component {
           onClick={() => {this.setState({ menuFlag: false });}}/>
         <Header menuClick={this.ClickMenu} getIn={this.getStateSignIn} getUp={this.getStateSignUp}/>
         <Menu stateMenu={this.state.menuFlag}/>
-        <HomeSlider />
-        <BooksCollection collectionName='News' collection={this.NewList()}/>
+        <BooksCollection collectionName='Cart' collection={this.CartList()}/>
         <Interesting interestingName={'Interesting'} collection={this.InterestingList()}/>
         <Footer />
       </div>
@@ -79,14 +78,14 @@ class Home extends React.Component {
 
 function bookStateToProps(state) {
   return {
-    newBooks: state.newBooks,
+    cartBooks: state.cartBooks,
     interestingBooks: state.interestingBooks
   };
 }
 
-export default connect(bookStateToProps)(Home);
+export default connect(bookStateToProps)(Cart);
 
-Home.propTypes = {
-  newBooks: PropTypes.array.isRequired,
+Cart.propTypes = {
+  cartBooks: PropTypes.array.isRequired,
   interestingBooks: PropTypes.array.isRequired
 };

@@ -3,14 +3,13 @@ import BooksCollection from '../../components/booksCollection/booksCollection';
 import { connect } from 'react-redux';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
-import HomeSlider from '../../components/slider/slider';
 import Interesting from '../../components/interesting/interesting';
 import Menu from '../../components/menu/menu';
 import PropTypes from 'prop-types';
 import React from 'react';
-import './home.less';
+import './poetry.less';
 
-class Home extends React.Component {
+class Poetry extends React.Component {
   constructor(props) {
     super(props);
     this.ClickMenu = this.ClickMenu.bind(this);
@@ -37,8 +36,8 @@ class Home extends React.Component {
     this.setState({ modalFlag: false });
   }
 
-  NewList() {
-    return this.props.newBooks.map((book) => {
+  PoetryList() {
+    return this.props.poetryBooks.map((book) => {
       return (
         <Book key={book.id} name={book.nameBook} price={book.priceBook} img={book.imgBook} description={book.description} callBack={this.openCloseScreen} close={this.closeScreen}/>
       );
@@ -68,8 +67,7 @@ class Home extends React.Component {
           onClick={() => {this.setState({ menuFlag: false });}}/>
         <Header menuClick={this.ClickMenu} getIn={this.getStateSignIn} getUp={this.getStateSignUp}/>
         <Menu stateMenu={this.state.menuFlag}/>
-        <HomeSlider />
-        <BooksCollection collectionName='News' collection={this.NewList()}/>
+        <BooksCollection collectionName='Poetry' collection={this.PoetryList()}/>
         <Interesting interestingName={'Interesting'} collection={this.InterestingList()}/>
         <Footer />
       </div>
@@ -79,14 +77,14 @@ class Home extends React.Component {
 
 function bookStateToProps(state) {
   return {
-    newBooks: state.newBooks,
+    poetryBooks: state.poetryBooks,
     interestingBooks: state.interestingBooks
   };
 }
 
-export default connect(bookStateToProps)(Home);
+export default connect(bookStateToProps)(Poetry);
 
-Home.propTypes = {
-  newBooks: PropTypes.array.isRequired,
+Poetry.propTypes = {
+  poetryBooks: PropTypes.array.isRequired,
   interestingBooks: PropTypes.array.isRequired
 };

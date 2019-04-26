@@ -1,0 +1,136 @@
+@import '../../variables.less';
+
+#footer {
+    .footer {
+        width: 100%;
+        min-height: 400px;
+        background-color: @white;
+        box-shadow: @shadow;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        h2 {
+            font-family: @font;
+            text-align: center;
+            padding-top: 30px;
+            margin-bottom: 30px;
+        }
+        .contact-content {
+            display: flex;
+            flex-wrap: wrap;
+            .contact-form {
+                width: 50%;
+                min-height: 300px;
+                background-color: #F5F5F5;
+                margin-left: 20px;
+                margin-bottom: 40px;
+                box-shadow: @shadow;
+                padding: 20px;
+                border-radius: 10px;
+                p {
+                    font-family: @font;
+                    font-size: 20px;
+
+                }
+                .email {
+                    p {
+                        display: inline;
+                        margin-right: 20px;
+                    }
+                    input {
+                        outline: none;
+                        border-radius: 5px;
+                        border: 1px solid @border;
+                        height: 25px;
+                        width: 73%;
+                        padding-left: 5px;
+                    }
+                    input:focus {
+                        border: 1px solid @orange;
+                    }
+                }
+                .message {
+                    textarea {
+                        width: 100%;
+                        height: 150px;
+                        border-radius: 5px;
+                        padding-left: 5px;
+                        outline: none;
+                    }
+                    textarea:focus {
+                        border: 1px solid @orange;
+                    }
+                }
+                .send {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 30%;
+                    height: 35px;
+                    background-color: @orange;
+                    color: @white;
+                    font-family: @font;
+                    border-radius: 5px;
+                    font-size: 18px;
+                    cursor: pointer;
+                    position: relative;
+                    left: 50%;
+                    margin-left: -15%;
+                    margin-top: 20px;
+                    }
+            }
+            .links {
+                padding-top: 45px;
+                padding-left: 50px;
+                .contact-links {
+                    display: inline-block;
+                    margin-top: 0;
+                    margin-bottom: 30px;
+                    text-align: center;
+                    li {
+                        list-style-type: none;
+                        margin-top: 10px;
+                        cursor: pointer;
+                        a {
+                            text-decoration: none;
+                            color: black;
+                            font-family: 'Martel Sans', sans-serif;
+                        }
+                    }
+                    li {
+                        display: flex;
+                        align-items: center;
+                       img {
+                           object-fit: contain;
+                           width: 15%;
+                           margin-right: 15px;
+                       }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+@media(max-width: 991px) {
+    #footer {
+        .footer {
+            .contact-content {
+                .contact-form {
+                    width: 100%;
+                    margin-right: 20px;
+                }
+                .links {
+                    padding-top: 0;
+                    padding-left: 0;
+                    .contact-links {
+                        text-align: center;
+                        position: relative;
+                        padding-left: 20px;
+                    }
+                    
+                }
+            }
+        }
+    }
+}
