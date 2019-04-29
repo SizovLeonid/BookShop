@@ -7,6 +7,7 @@ import ReactDOM from 'react-dom';
 import './bootstrap-grid.min.css';
 
 const store = createStore(allReducers);
+console.log(store.getState());
 
 ReactDOM.render((
   <Provider store={store}>

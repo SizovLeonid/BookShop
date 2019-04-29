@@ -39,7 +39,7 @@ class Header extends React.Component {
               <a className='menu-btn' onClick={this.props.menuClick}><img src='../../assets/header/menu.png' /></a>
               <input type='text' />
               <a className='search-btn'></a>
-              <a className='header-cart' href='/cart'><img src='../../assets/header/shopping-purse-icon.png' /><div className='orange-dot'><span>0</span></div></a>
+              <a className='header-cart' href='/cart'><img src='../../assets/header/shopping-purse-icon.png' /><div className='orange-dot'><span>{this.props.countBook}</span></div></a>
             </div>
           </div>
         </div>
@@ -56,5 +56,6 @@ export default Header;
 Header.propTypes = {
   menuClick: PropTypes.func.isRequired,
   getIn: PropTypes.func.isRequired,
-  getUp: PropTypes.func.isRequired
+  getUp: PropTypes.func.isRequired,
+  countBook: PropTypes.number.isRequired
 };

@@ -17,7 +17,7 @@ class ModalBook extends React.Component {
         </div>
         <div className='buttons'>
           <a className='btn-buy' ><p>Buy for {this.props.price}$</p></a>
-          <a className='btn-add' ><p>Add to Cart</p></a>
+          <a onClick={() => { this.props.addToCart(); this.props.close();}} className='btn-add' ><p>Add to Cart</p></a>
         </div>
       </div>
     );
@@ -32,5 +32,6 @@ ModalBook.propTypes = {
   price: PropTyps.number.isRequired,
   img: PropTyps.string.isRequired,
   description: PropTyps.string.isRequired,
-  close: PropTyps.func.isRequired
+  close: PropTyps.func.isRequired,
+  addToCart: PropTyps.func
 };

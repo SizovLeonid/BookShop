@@ -1,3 +1,4 @@
+import { bindActionCreators } from '../../../../../AppData/Local/Microsoft/TypeScript/3.4.3/node_modules/redux';
 import Book from '../../components/book/book';
 import BooksCollection from '../../components/booksCollection/booksCollection';
 import CartBook from '../../components/cartBook/cartBook';
@@ -8,6 +9,7 @@ import Interesting from '../../components/interesting/interesting';
 import Menu from '../../components/menu/menu';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { AddBook, RemoveBook } from '../../actions/addBook';
 import './cart.less';
 
 class Cart extends React.Component {
@@ -40,7 +42,7 @@ class Cart extends React.Component {
   CartList() {
     return this.props.cartBooks.map((book) => {
       return (
-        <CartBook key={book.id} name={book.nameBook} price={book.priceBook} img={book.imgBook} description={book.description} callBack={this.openCloseScreen} close={this.closeScreen}/>
+        <CartBook removeToCart={() => this.props.removeToCart(book)} key={book.id} name={book.nameBook} price={book.priceBook} img={book.imgBook} description={book.description} callBack={this.openCloseScreen} close={this.closeScreen}/>
       );
     });
   }
@@ -48,7 +50,7 @@ class Cart extends React.Component {
   InterestingList() {
     return this.props.interestingBooks.map((book) => {
       return (
-        <Book key={book.id} name={book.nameBook} price={book.priceBook} img={book.imgBook} description={book.description} callBack={this.openCloseScreen} close={this.closeScreen}/>
+        <Book addToCart={() => this.props.addToCart(book)} key={book.id} name={book.nameBook} price={book.priceBook} img={book.imgBook} description={book.description} callBack={this.openCloseScreen} close={this.closeScreen}/>
       );
     });
   }
@@ -66,7 +68,7 @@ class Cart extends React.Component {
       <div>
         <div className={`${this.state.menuFlag === true || this.state.modalFlag === true || this.state.signIn === true || this.state.signUp === true ? 'closeScreen' : ''}`}
           onClick={() => {this.setState({ menuFlag: false });}}/>
-        <Header menuClick={this.ClickMenu} getIn={this.getStateSignIn} getUp={this.getStateSignUp}/>
+        <Header menuClick={this.ClickMenu} getIn={this.getStateSignIn} getUp={this.getStateSignUp} countBook={this.props.cartBooks.length}/>
         <Menu stateMenu={this.state.menuFlag}/>
         <BooksCollection collectionName='Cart' collection={this.CartList()}/>
         <Interesting interestingName={'Interesting'} collection={this.InterestingList()}/>
@@ -83,9 +85,15 @@ function bookStateToProps(state) {
   };
 }
 
-export default connect(bookStateToProps)(Cart);
+function matchDispatchToProps(dispatch) {
+  return bindActionCreators({ addToCart: AddBook, removeToCart: RemoveBook }, dispatch);
+}
+
+export default connect(bookStateToProps, matchDispatchToProps)(Cart);
 
 Cart.propTypes = {
   cartBooks: PropTypes.array.isRequired,
-  interestingBooks: PropTypes.array.isRequired
+  interestingBooks: PropTypes.array.isRequired,
+  addToCart: PropTypes.func.isRequired,
+  removeToCart: PropTypes.func.isRequired
 };

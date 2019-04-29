@@ -55,20 +55,6 @@ export default function () {
       priceBook: 17,
       imgBook: '../../assets/books/2312357.jpg',
       description: 'Strategize offers a comprehensive approach to product strategy using the latest practices geared specifically to digital products. Not just theory, the book is chock-full of real-world examples, making it easier to apply the principles to your company and products. Strategize is essential reading for everyone in charge of products: product executives, product managers, and product owners'
-    },
-    {
-      id: 9,
-      nameBook: 'Девятая книга',
-      priceBook: 17,
-      imgBook: '../../assets/books/2312357.jpg',
-      description: 'Strategize offers a comprehensive approach to product strategy using the latest practices geared specifically to digital products. Not just theory, the book is chock-full of real-world examples, making it easier to apply the principles to your company and products. Strategize is essential reading for everyone in charge of products: product executives, product managers, and product owners'
-    },
-    {
-      id: 10,
-      nameBook: 'Десятая книга',
-      priceBook: 12,
-      imgBook: '../../assets/books/15374.jpg',
-      description: 'Strategize offers a comprehensive approach to product strategy using the latest practices geared specifically to digital products. Not just theory, the book is chock-full of real-world examples, making it easier to apply the principles to your company and products. Strategize is essential reading for everyone in charge of products: product executives, product managers, and product owners'
     }
   ];
 }

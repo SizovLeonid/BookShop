@@ -1,3 +1,5 @@
+import { AddBook } from '../../actions/addBook';
+import { bindActionCreators } from '../../../../../AppData/Local/Microsoft/TypeScript/3.4.3/node_modules/redux';
 import Book from '../../components/book/book';
 import BooksCollection from '../../components/booksCollection/booksCollection';
 import { connect } from 'react-redux';
@@ -40,7 +42,7 @@ class Home extends React.Component {
   NewList() {
     return this.props.newBooks.map((book) => {
       return (
-        <Book key={book.id} name={book.nameBook} price={book.priceBook} img={book.imgBook} description={book.description} callBack={this.openCloseScreen} close={this.closeScreen}/>
+        <Book addToCart={() => this.props.addToCart(book)} key={book.id} name={book.nameBook} price={book.priceBook} img={book.imgBook} description={book.description} callBack={this.openCloseScreen} close={this.closeScreen}/>
       );
     });
   }
@@ -48,7 +50,7 @@ class Home extends React.Component {
   InterestingList() {
     return this.props.interestingBooks.map((book) => {
       return (
-        <Book key={book.id} name={book.nameBook} price={book.priceBook} img={book.imgBook} description={book.description} callBack={this.openCloseScreen} close={this.closeScreen}/>
+        <Book addToCart={() => this.props.addToCart(book)} key={book.id} name={book.nameBook} price={book.priceBook} img={book.imgBook} description={book.description} callBack={this.openCloseScreen} close={this.closeScreen}/>
       );
     });
   }
@@ -66,7 +68,7 @@ class Home extends React.Component {
       <div>
         <div className={`${this.state.menuFlag === true || this.state.modalFlag === true || this.state.signIn === true || this.state.signUp === true ? 'closeScreen' : ''}`}
           onClick={() => {this.setState({ menuFlag: false });}}/>
-        <Header menuClick={this.ClickMenu} getIn={this.getStateSignIn} getUp={this.getStateSignUp}/>
+        <Header menuClick={this.ClickMenu} getIn={this.getStateSignIn} getUp={this.getStateSignUp} countBook={this.props.cartBooks.length}/>
         <Menu stateMenu={this.state.menuFlag}/>
         <HomeSlider />
         <BooksCollection collectionName='News' collection={this.NewList()}/>
@@ -80,13 +82,20 @@ class Home extends React.Component {
 function bookStateToProps(state) {
   return {
     newBooks: state.newBooks,
-    interestingBooks: state.interestingBooks
+    interestingBooks: state.interestingBooks,
+    cartBooks: state.cartBooks,
   };
 }
 
-export default connect(bookStateToProps)(Home);
+function matchDispatchToProps(dispatch) {
+  return bindActionCreators({ addToCart: AddBook }, dispatch);
+}
+
+export default connect(bookStateToProps, matchDispatchToProps)(Home);
 
 Home.propTypes = {
   newBooks: PropTypes.array.isRequired,
-  interestingBooks: PropTypes.array.isRequired
+  interestingBooks: PropTypes.array.isRequired,
+  addToCart: PropTypes.func,
+  cartBooks: PropTypes.array.isRequired
 };

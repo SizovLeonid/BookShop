@@ -1,3 +1,5 @@
+import { AddBook } from '../../actions/addBook';
+import { bindActionCreators } from '../../../../../AppData/Local/Microsoft/TypeScript/3.4.3/node_modules/redux';
 import Book from '../../components/book/book';
 import BooksCollection from '../../components/booksCollection/booksCollection';
 import { connect } from 'react-redux';
@@ -39,7 +41,7 @@ class Business extends React.Component {
   BusinessList() {
     return this.props.businessBooks.map((book) => {
       return (
-        <Book key={book.id} name={book.nameBook} price={book.priceBook} img={book.imgBook} description={book.description} callBack={this.openCloseScreen} close={this.closeScreen}/>
+        <Book addToCart={() => this.props.addToCart(book)} key={book.id} name={book.nameBook} price={book.priceBook} img={book.imgBook} description={book.description} callBack={this.openCloseScreen} close={this.closeScreen}/>
       );
     });
   }
@@ -47,7 +49,7 @@ class Business extends React.Component {
   InterestingList() {
     return this.props.interestingBooks.map((book) => {
       return (
-        <Book key={book.id} name={book.nameBook} price={book.priceBook} img={book.imgBook} description={book.description} callBack={this.openCloseScreen} close={this.closeScreen}/>
+        <Book addToCart={() => this.props.addToCart(book)} key={book.id} name={book.nameBook} price={book.priceBook} img={book.imgBook} description={book.description} callBack={this.openCloseScreen} close={this.closeScreen}/>
       );
     });
   }
@@ -65,7 +67,7 @@ class Business extends React.Component {
       <div>
         <div className={`${this.state.menuFlag === true || this.state.modalFlag === true || this.state.signIn === true || this.state.signUp === true ? 'closeScreen' : ''}`}
           onClick={() => {this.setState({ menuFlag: false });}}/>
-        <Header menuClick={this.ClickMenu} getIn={this.getStateSignIn} getUp={this.getStateSignUp}/>
+        <Header menuClick={this.ClickMenu} getIn={this.getStateSignIn} getUp={this.getStateSignUp} countBook={this.props.cartBooks.length}/>
         <Menu stateMenu={this.state.menuFlag}/>
         <BooksCollection collectionName='Business' collection={this.BusinessList()}/>
         <Interesting interestingName={'Interesting'} collection={this.InterestingList()}/>
@@ -78,13 +80,20 @@ class Business extends React.Component {
 function bookStateToProps(state) {
   return {
     businessBooks: state.businessBooks,
-    interestingBooks: state.interestingBooks
+    interestingBooks: state.interestingBooks,
+    cartBooks: state.cartBooks
   };
 }
 
-export default connect(bookStateToProps)(Business);
+function matchDispatchToProps(dispatch) {
+  return bindActionCreators({ addToCart: AddBook }, dispatch);
+}
+
+export default connect(bookStateToProps, matchDispatchToProps)(Business);
 
 Business.propTypes = {
   businessBooks: PropTypes.array.isRequired,
-  interestingBooks: PropTypes.array.isRequired
+  interestingBooks: PropTypes.array.isRequired,
+  addToCart: PropTypes.func.isRequired,
+  cartBooks: PropTypes.array.isRequired
 };

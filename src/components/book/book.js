@@ -1,3 +1,4 @@
+import { connect } from 'react-redux';
 import ModalBook from '../modal/modalBook/modalBook';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -10,7 +11,7 @@ class Book extends React.Component {
   }
 
   state= {
-    modalFlag: false
+    modalFlag: false,
   }
 
   clickModal() {
@@ -34,20 +35,25 @@ class Book extends React.Component {
               <h4>{this.props.name}</h4>
               <p>{this.props.price}$</p>
               <div className='btn'>
-                <a href='http://google.com/' className='button-add'><div>Add</div></a>
+                <a onClick={this.props.addToCart} className='button-add'><div>Add</div></a>
                 <a className='button-buy'><div>Buy</div></a>
               </div>
             </div>
           </div>
         </div>
-        <ModalBook stateModal={this.state.modalFlag} name={this.props.name} price={this.props.price} img={this.props.img} description={this.props.description} close={this.closeModal}/>
+        <ModalBook addToCart={this.props.addToCart} stateModal={this.state.modalFlag} name={this.props.name} price={this.props.price} img={this.props.img} description={this.props.description} close={this.closeModal}/>
       </div>
     );
   }
 }
 
+function bookStateToProps(state) {
+  return {
+    cartBooks: state.cartBooks
+  };
+}
 
-export default Book;
+export default connect(bookStateToProps)(Book);
 
 Book.propTypes = {
   name: PropTypes.string.isRequired,
@@ -55,5 +61,6 @@ Book.propTypes = {
   img: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   callBack: PropTypes.func,
-  close: PropTypes.func
+  close: PropTypes.func,
+  addToCart: PropTypes.func
 };
