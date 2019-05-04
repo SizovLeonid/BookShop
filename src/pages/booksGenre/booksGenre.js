@@ -1,4 +1,4 @@
-import { AddBook } from '../../actions/addBook';
+import { AddBook } from '../../actions/actions';
 import { bindActionCreators } from '../../../../../AppData/Local/Microsoft/TypeScript/3.4.3/node_modules/redux';
 import Book from '../../components/book/book';
 import BooksCollection from '../../components/booksCollection/booksCollection';
@@ -9,9 +9,8 @@ import Interesting from '../../components/interesting/interesting';
 import Menu from '../../components/menu/menu';
 import PropTypes from 'prop-types';
 import React from 'react';
-import './business.less';
 
-class Business extends React.Component {
+class BooksGenre extends React.Component {
   constructor(props) {
     super(props);
     this.ClickMenu = this.ClickMenu.bind(this);
@@ -38,8 +37,8 @@ class Business extends React.Component {
     this.setState({ modalFlag: false });
   }
 
-  BusinessList() {
-    return this.props.businessBooks.map((book) => {
+  BooksList() {
+    return this.props.booksCollection.map((book) => {
       return (
         <Book addToCart={() => this.props.addToCart(book)} key={book.id} name={book.nameBook} price={book.priceBook} img={book.imgBook} description={book.description} callBack={this.openCloseScreen} close={this.closeScreen}/>
       );
@@ -47,7 +46,7 @@ class Business extends React.Component {
   }
 
   InterestingList() {
-    return this.props.interestingBooks.map((book) => {
+    return this.props.interesting.map((book) => {
       return (
         <Book addToCart={() => this.props.addToCart(book)} key={book.id} name={book.nameBook} price={book.priceBook} img={book.imgBook} description={book.description} callBack={this.openCloseScreen} close={this.closeScreen}/>
       );
@@ -67,9 +66,9 @@ class Business extends React.Component {
       <div>
         <div className={`${this.state.menuFlag === true || this.state.modalFlag === true || this.state.signIn === true || this.state.signUp === true ? 'closeScreen' : ''}`}
           onClick={() => {this.setState({ menuFlag: false });}}/>
-        <Header menuClick={this.ClickMenu} getIn={this.getStateSignIn} getUp={this.getStateSignUp} countBook={this.props.cartBooks.length}/>
+        <Header menuClick={this.ClickMenu} getIn={this.getStateSignIn} getUp={this.getStateSignUp} countBook={this.props.cart.length}/>
         <Menu stateMenu={this.state.menuFlag}/>
-        <BooksCollection collectionName='Business' collection={this.BusinessList()}/>
+        <BooksCollection collectionName={this.props.collectionName} collection={this.BooksList()}/>
         <Interesting interestingName={'Interesting'} collection={this.InterestingList()}/>
         <Footer />
       </div>
@@ -79,9 +78,8 @@ class Business extends React.Component {
 
 function bookStateToProps(state) {
   return {
-    businessBooks: state.businessBooks,
-    interestingBooks: state.interestingBooks,
-    cartBooks: state.cartBooks
+    interesting: state.books.interesting,
+    cart: state.cart
   };
 }
 
@@ -89,11 +87,12 @@ function matchDispatchToProps(dispatch) {
   return bindActionCreators({ addToCart: AddBook }, dispatch);
 }
 
-export default connect(bookStateToProps, matchDispatchToProps)(Business);
+export default connect(bookStateToProps, matchDispatchToProps)(BooksGenre);
 
-Business.propTypes = {
-  businessBooks: PropTypes.array.isRequired,
-  interestingBooks: PropTypes.array.isRequired,
+BooksGenre.propTypes = {
+  booksCollection: PropTypes.array.isRequired,
+  interesting: PropTypes.array.isRequired,
   addToCart: PropTypes.func.isRequired,
-  cartBooks: PropTypes.array.isRequired
+  cart: PropTypes.array.isRequired,
+  collectionName: PropTypes.string.isRequired
 };

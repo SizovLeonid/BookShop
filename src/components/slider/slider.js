@@ -7,7 +7,7 @@ import './slider.less';
 
 class HomeSlider extends React.Component {
   SlideList() {
-    return this.props.slideitem.map((slide) => {
+    return this.props.slide.map((slide) => {
       return (
         <Slide key={slide.id} slideName={slide.slideHeadline} slideDescription={slide.description} img={slide.img} />
       );
@@ -38,12 +38,12 @@ class HomeSlider extends React.Component {
 
 function bookStateToProps(state) {
   return {
-    slideitem: state.slideitem
+    slide: state.books.slide
   };
 }
 
 export default connect(bookStateToProps)(HomeSlider);
 
 HomeSlider.propTypes = {
-  slideitem: PropTypes.array.isRequired,
+  slide: PropTypes.array.isRequired,
 };

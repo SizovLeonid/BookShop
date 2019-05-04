@@ -1,13 +1,8 @@
-import Adventure from './pages/adventure/adventure';
-import Business from './pages/business/business';
+import BooksGenre from './pages/booksGenre/booksGenre';
 import Cart from './pages/cart/cart';
-import Children from './pages/children/children';
-import Detective from './pages/detective/detective';
-import Fantasy from './pages/fantasy/fantasy';
+import { connect } from 'react-redux';
 import Home from './pages/home/home';
-import Humor from './pages/Humor/humor';
-import LoveStory from './pages/loveStory/loveStory';
-import Poetry from './pages/poetry/poetry';
+import PropTypes from 'prop-types';
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
@@ -16,15 +11,15 @@ class App extends React.Component {
     return (
       <BrowserRouter>
         <Switch>
-          <Route exact path='/' component={Home}/>
-          <Route path='/detective' component={Detective}/>
-          <Route path='/humor' component={Humor}/>
-          <Route path='/fantasy' component={Fantasy}/>
-          <Route path='/poetry' component={Poetry}/>
-          <Route path='/loveStory' component={LoveStory}/>
-          <Route path='/childrens' component={Children}/>
-          <Route path='/business' component={Business}/>
-          <Route path='/adventure' component={Adventure}/>
+          <Route exact path='/' component={() => <Home booksCollection={this.props.books.new}/>}/>
+          <Route path='/detective' component={() => <BooksGenre collectionName='Detective' booksCollection={this.props.books.detective}/>}/>
+          <Route path='/humor' component={() => <BooksGenre collectionName='Humor' booksCollection={this.props.books.humor}/>}/>
+          <Route path='/fantasy' component={() => <BooksGenre collectionName='Fantasy' booksCollection={this.props.books.fantasy}/>}/>
+          <Route path='/poetry' component={() => <BooksGenre collectionName='Poetry' booksCollection={this.props.books.poetry}/>}/>
+          <Route path='/loveStory' component={() => <BooksGenre collectionName='Love Story' booksCollection={this.props.books.loveStory}/>}/>
+          <Route path='/childrens' component={() => <BooksGenre collectionName='Childrens literature' booksCollection={this.props.books.children}/>}/>
+          <Route path='/business' component={() => <BooksGenre collectionName='Business' booksCollection={this.props.books.business}/>}/>
+          <Route path='/adventure' component={() => <BooksGenre collectionName='Adventure' booksCollection={this.props.books.adventure}/>}/>
           <Route path='/cart' component={Cart}/>
         </Switch>
       </BrowserRouter>
@@ -32,4 +27,14 @@ class App extends React.Component {
   }
 }
 
-export default App;
+function bookStateToProps(state) {
+  return {
+    books: state.books
+  };
+}
+
+export default connect(bookStateToProps)(App);
+
+App.propTypes = {
+  books: PropTypes.object
+};

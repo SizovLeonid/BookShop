@@ -6,12 +6,23 @@ import './booksCollection.less';
 class BooksCollection extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { value: '' };
+    this.state = { value: 100, input: '' };
     this.handleChange = this.handleChange.bind(this);
+    this.onChange = this.onChange.bind(this);
   }
 
   handleChange(event) {
     this.setState({ value: event.target.value });
+  }
+
+  onChange(event) {
+    this.setState({ input: event.target.value });
+  }
+
+  findBook(arr) {
+    if (this.state.input === '' && this.state.value === 100) {
+      return this.props.collection;
+    } return arr.filter(book => book.props.name.search(this.state.input) !== -1 && book.props.price <= this.state.value);
   }
 
   render() {
@@ -23,7 +34,7 @@ class BooksCollection extends React.Component {
             <div className='filter'>
               <div className='title'>
                 <p>Title</p>
-                <input type='text'/>
+                <input type='text' onChange={this.onChange} />
               </div>
               <div className='price'>
                 <p>Price</p>
@@ -31,7 +42,7 @@ class BooksCollection extends React.Component {
                 <div className='price-text'><span>{this.state.value}$</span></div>
               </div>
             </div>
-            <div className='books'>{this.props.collection}</div>
+            <div className='books'>{this.findBook(this.props.collection)}</div>
           </div>
         </div>
       </div>

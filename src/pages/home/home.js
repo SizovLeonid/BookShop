@@ -1,4 +1,4 @@
-import { AddBook } from '../../actions/addBook';
+import { AddBook } from '../../actions/actions';
 import { bindActionCreators } from '../../../../../AppData/Local/Microsoft/TypeScript/3.4.3/node_modules/redux';
 import Book from '../../components/book/book';
 import BooksCollection from '../../components/booksCollection/booksCollection';
@@ -40,7 +40,7 @@ class Home extends React.Component {
   }
 
   NewList() {
-    return this.props.newBooks.map((book) => {
+    return this.props.booksCollection.map((book) => {
       return (
         <Book addToCart={() => this.props.addToCart(book)} key={book.id} name={book.nameBook} price={book.priceBook} img={book.imgBook} description={book.description} callBack={this.openCloseScreen} close={this.closeScreen}/>
       );
@@ -48,7 +48,7 @@ class Home extends React.Component {
   }
 
   InterestingList() {
-    return this.props.interestingBooks.map((book) => {
+    return this.props.interesting.map((book) => {
       return (
         <Book addToCart={() => this.props.addToCart(book)} key={book.id} name={book.nameBook} price={book.priceBook} img={book.imgBook} description={book.description} callBack={this.openCloseScreen} close={this.closeScreen}/>
       );
@@ -68,7 +68,7 @@ class Home extends React.Component {
       <div>
         <div className={`${this.state.menuFlag === true || this.state.modalFlag === true || this.state.signIn === true || this.state.signUp === true ? 'closeScreen' : ''}`}
           onClick={() => {this.setState({ menuFlag: false });}}/>
-        <Header menuClick={this.ClickMenu} getIn={this.getStateSignIn} getUp={this.getStateSignUp} countBook={this.props.cartBooks.length}/>
+        <Header menuClick={this.ClickMenu} getIn={this.getStateSignIn} getUp={this.getStateSignUp} countBook={this.props.cart.length}/>
         <Menu stateMenu={this.state.menuFlag}/>
         <HomeSlider />
         <BooksCollection collectionName='News' collection={this.NewList()}/>
@@ -81,9 +81,8 @@ class Home extends React.Component {
 
 function bookStateToProps(state) {
   return {
-    newBooks: state.newBooks,
-    interestingBooks: state.interestingBooks,
-    cartBooks: state.cartBooks,
+    interesting: state.books.interesting,
+    cart: state.cart
   };
 }
 
@@ -94,8 +93,8 @@ function matchDispatchToProps(dispatch) {
 export default connect(bookStateToProps, matchDispatchToProps)(Home);
 
 Home.propTypes = {
-  newBooks: PropTypes.array.isRequired,
-  interestingBooks: PropTypes.array.isRequired,
+  interesting: PropTypes.array.isRequired,
   addToCart: PropTypes.func,
-  cartBooks: PropTypes.array.isRequired
+  cart: PropTypes.array.isRequired,
+  booksCollection: PropTypes.array.isRequired
 };

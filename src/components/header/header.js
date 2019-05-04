@@ -37,7 +37,6 @@ class Header extends React.Component {
               <a onClick={this.signIn}>Sizgn in</a>
               <a onClick={this.signUp}>Sign up</a>
               <a className='menu-btn' onClick={this.props.menuClick}><img src='../../assets/header/menu.png' /></a>
-              <input type='text' />
               <a className='search-btn'></a>
               <a className='header-cart' href='/cart'><img src='../../assets/header/shopping-purse-icon.png' /><div className='orange-dot'><span>{this.props.countBook}</span></div></a>
             </div>
