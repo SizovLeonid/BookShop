@@ -7,7 +7,7 @@ import './slider.less';
 
 class HomeSlider extends React.Component {
   SlideList() {
-    return this.props.slideitem.map((slide) => {
+    return this.props.slide.map((slide) => {
       return (
         <Slide key={slide.id} slideName={slide.slideHeadline} slideDescription={slide.description} img={slide.img} />
       );
@@ -18,9 +18,11 @@ class HomeSlider extends React.Component {
     const settings = {
       dots: true,
       infinite: true,
-      speed: 500,
+      speed: 1000,
       slidesToShow: 1,
-      slidesToScroll: 1
+      slidesToScroll: 1,
+      autoplay: true,
+      autoplaySpeed: 5000
     };
     return (
       <div id='slider'>
@@ -36,12 +38,12 @@ class HomeSlider extends React.Component {
 
 function bookStateToProps(state) {
   return {
-    slideitem: state.slideitem
+    slide: state.books.slide
   };
 }
 
 export default connect(bookStateToProps)(HomeSlider);
 
 HomeSlider.propTypes = {
-  slideitem: PropTypes.array.isRequired,
+  slide: PropTypes.array.isRequired,
 };

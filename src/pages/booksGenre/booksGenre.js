@@ -5,14 +5,12 @@ import BooksCollection from '../../components/booksCollection/booksCollection';
 import { connect } from 'react-redux';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
-import HomeSlider from '../../components/slider/slider';
 import Interesting from '../../components/interesting/interesting';
 import Menu from '../../components/menu/menu';
 import PropTypes from 'prop-types';
 import React from 'react';
-import './home.less';
 
-class Home extends React.Component {
+class BooksGenre extends React.Component {
   constructor(props) {
     super(props);
     this.ClickMenu = this.ClickMenu.bind(this);
@@ -39,7 +37,7 @@ class Home extends React.Component {
     this.setState({ modalFlag: false });
   }
 
-  NewList() {
+  BooksList() {
     return this.props.booksCollection.map((book) => {
       return (
         <Book addToCart={() => this.props.addToCart(book)} key={book.id} name={book.nameBook} price={book.priceBook} img={book.imgBook} description={book.description} callBack={this.openCloseScreen} close={this.closeScreen}/>
@@ -70,8 +68,7 @@ class Home extends React.Component {
           onClick={() => {this.setState({ menuFlag: false });}}/>
         <Header menuClick={this.ClickMenu} getIn={this.getStateSignIn} getUp={this.getStateSignUp} countBook={this.props.cart.length}/>
         <Menu stateMenu={this.state.menuFlag}/>
-        <HomeSlider />
-        <BooksCollection collectionName='News' collection={this.NewList()}/>
+        <BooksCollection collectionName={this.props.collectionName} collection={this.BooksList()}/>
         <Interesting interestingName={'Interesting'} collection={this.InterestingList()}/>
         <Footer />
       </div>
@@ -90,11 +87,12 @@ function matchDispatchToProps(dispatch) {
   return bindActionCreators({ addToCart: AddBook }, dispatch);
 }
 
-export default connect(bookStateToProps, matchDispatchToProps)(Home);
+export default connect(bookStateToProps, matchDispatchToProps)(BooksGenre);
 
-Home.propTypes = {
+BooksGenre.propTypes = {
+  booksCollection: PropTypes.array.isRequired,
   interesting: PropTypes.array.isRequired,
-  addToCart: PropTypes.func,
+  addToCart: PropTypes.func.isRequired,
   cart: PropTypes.array.isRequired,
-  booksCollection: PropTypes.array.isRequired
+  collectionName: PropTypes.string.isRequired
 };

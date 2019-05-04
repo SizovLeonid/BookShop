@@ -1,0 +1,53 @@
+@import '../../variables.less';
+
+#booksCollection {
+    .booksCollection {
+        width: 100%;
+        min-height: 200px;
+        margin-top: 20px;
+        background-color: @white;
+        box-shadow: @shadow;
+        h2 {
+            font-family: @font;
+            text-align: center;
+            padding-top: 30px;
+            margin-bottom: 20px;
+        }
+        .books {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+        .filter {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            .title {
+                margin-right: 10px;
+                font-family: @font;
+                input {
+                    outline: none;
+                    border-radius: 5px;
+                    border: 1px solid @border;
+                    height: 25px;
+                    padding-left: 7px;
+                }
+                input:focus {
+                    border-color: @orange;
+                }
+            }
+            .price {
+                margin-left: 10px;
+                font-family: @font;
+            }
+            .price-text {
+                display: inline-block;
+                padding-left: 15px;
+                position: relative;
+                top: -5px;
+                font-size: 20px;
+            }
+        }
+    }
+}

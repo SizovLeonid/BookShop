@@ -1,0 +1,64 @@
+#cartBook {
+    display: inline-block;
+    width: 200px;
+    padding-bottom: 40px;
+    margin-right: 20px;
+    margin-left: 20px;
+    .cartBook {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        img {
+            width: 200px;
+            height: 300px;
+        }
+        h4 {
+            font-family: 'Martel Sans', sans-serif;
+            font-size: 18px;
+            margin-top: 10px;
+            margin-bottom: 0;
+        }
+        p {
+            font-family: 'Martel Sans', sans-serif;
+            margin-top: 0px;
+            margin-bottom: 0;
+        }
+        .cart-button {
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            margin-top: 10px;
+            .price-book {
+                width: 60px;
+                height: 30px;
+                background-color: transparent;
+                border: 1px solid #FB4910;
+                border-radius: 10px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                span {
+                    color: #FB4910;
+                    font-family: 'Martel Sans', sans-serif;
+                    font-size: 18px;
+                }
+            }
+            .delete-book {
+                width: 80px;
+                height: 30px;
+                background-color: #FB4910;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-radius: 10px;
+                cursor: pointer;
+                text-decoration: none;
+                span {
+                    color: white;
+                    font-family: 'Martel Sans', sans-serif;
+                    font-size: 18px;
+                }
+            }
+        }
+    }
+}

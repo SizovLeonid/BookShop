@@ -1,8 +1,10 @@
+import Books from './books';
+import Cart from './cart';
 import { combineReducers } from 'redux';
-import Slide from './slide.js';
 
 const allReducers = combineReducers({
-  slideitem: Slide
+  cart: Cart,
+  books: Books
 });
 
 export default allReducers;
