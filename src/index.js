@@ -1,12 +1,11 @@
-import allReducers from './reducers/allReducers';
 import App from './app';
-import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import store from './saga/index';
 import './bootstrap-grid.min.css';
 
-const store = createStore(allReducers);
+
 console.log(store.getState());
 
 ReactDOM.render((
