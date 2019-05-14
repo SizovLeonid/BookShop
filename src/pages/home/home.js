@@ -1,5 +1,4 @@
-import { AddBook } from '../../actions/actions';
-import { bindActionCreators } from '../../../../../AppData/Local/Microsoft/TypeScript/3.4.3/node_modules/redux';
+import { homeActions as actions } from './homeActions';
 import Book from '../../components/book/book';
 import BooksCollection from '../../components/booksCollection/booksCollection';
 import { connect } from 'react-redux';
@@ -18,6 +17,7 @@ class Home extends React.Component {
     this.ClickMenu = this.ClickMenu.bind(this);
     this.getStateSignIn = this.getStateSignIn.bind(this);
     this.getStateSignUp = this.getStateSignUp.bind(this);
+    this.state = { interesting: [] };
   }
 
   state = {
@@ -25,6 +25,12 @@ class Home extends React.Component {
     modalFlag: false,
     signIn: false,
     signUp: false
+  }
+
+  componentDidMount() {
+    fetch('http://localhost:9090/api/books/get-interesting')
+      .then(res => res.json())
+      .then(json => this.setState({ interesting: json }));
   }
 
   ClickMenu() {
@@ -48,7 +54,7 @@ class Home extends React.Component {
   }
 
   InterestingList() {
-    return this.props.interesting.map((book) => {
+    return this.state.interesting.map((book) => {
       return (
         <Book addToCart={() => this.props.addToCart(book)} key={book.id} name={book.nameBook} price={book.priceBook} img={book.imgBook} description={book.description} callBack={this.openCloseScreen} close={this.closeScreen}/>
       );
@@ -79,22 +85,16 @@ class Home extends React.Component {
   }
 }
 
-function bookStateToProps(state) {
-  return {
-    interesting: state.books.interesting,
-    cart: state.cart
-  };
-}
+const stateToProps = state => ({
+  books: state.books.newBooks,
+  cart: state.cartBooks.cart
+});
 
-function matchDispatchToProps(dispatch) {
-  return bindActionCreators({ addToCart: AddBook }, dispatch);
-}
-
-export default connect(bookStateToProps, matchDispatchToProps)(Home);
+export default connect(stateToProps, actions)(Home);
 
 Home.propTypes = {
-  interesting: PropTypes.array.isRequired,
   addToCart: PropTypes.func,
   cart: PropTypes.array.isRequired,
-  booksCollection: PropTypes.array.isRequired
+  getBooks: PropTypes.func.isRequired,
+  booksCollection: PropTypes.array
 };

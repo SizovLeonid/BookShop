@@ -2,11 +2,12 @@ import App from './app';
 import { Provider } from 'react-redux';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import store from './saga/index';
+import store from './store';
 import './bootstrap-grid.min.css';
 
 
 console.log(store.getState());
+
 
 ReactDOM.render((
   <Provider store={store}>

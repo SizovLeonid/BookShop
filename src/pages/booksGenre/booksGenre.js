@@ -1,5 +1,4 @@
-import { AddBook } from '../../actions/actions';
-import { bindActionCreators } from '../../../../../AppData/Local/Microsoft/TypeScript/3.4.3/node_modules/redux';
+import { genreActions as actions } from './genreActions';
 import Book from '../../components/book/book';
 import BooksCollection from '../../components/booksCollection/booksCollection';
 import { connect } from 'react-redux';
@@ -16,6 +15,7 @@ class BooksGenre extends React.Component {
     this.ClickMenu = this.ClickMenu.bind(this);
     this.getStateSignIn = this.getStateSignIn.bind(this);
     this.getStateSignUp = this.getStateSignUp.bind(this);
+    this.state = { interesting: [] };
   }
 
   state = {
@@ -23,6 +23,12 @@ class BooksGenre extends React.Component {
     modalFlag: false,
     signIn: false,
     signUp: false
+  }
+
+  componentDidMount() {
+    fetch('http://localhost:9090/api/books/get-interesting')
+      .then(res => res.json())
+      .then(json => this.setState({ interesting: json }));
   }
 
   ClickMenu() {
@@ -46,7 +52,7 @@ class BooksGenre extends React.Component {
   }
 
   InterestingList() {
-    return this.props.interesting.map((book) => {
+    return this.state.interesting.map((book) => {
       return (
         <Book addToCart={() => this.props.addToCart(book)} key={book.id} name={book.nameBook} price={book.priceBook} img={book.imgBook} description={book.description} callBack={this.openCloseScreen} close={this.closeScreen}/>
       );
@@ -78,21 +84,16 @@ class BooksGenre extends React.Component {
 
 function bookStateToProps(state) {
   return {
-    interesting: state.books.interesting,
-    cart: state.cart
+    books: state.genreBooks,
+    cart: state.cartBooks.cart
   };
 }
 
-function matchDispatchToProps(dispatch) {
-  return bindActionCreators({ addToCart: AddBook }, dispatch);
-}
-
-export default connect(bookStateToProps, matchDispatchToProps)(BooksGenre);
+export default connect(bookStateToProps, actions)(BooksGenre);
 
 BooksGenre.propTypes = {
   booksCollection: PropTypes.array.isRequired,
-  interesting: PropTypes.array.isRequired,
-  addToCart: PropTypes.func.isRequired,
+  addToCart: PropTypes.func,
   cart: PropTypes.array.isRequired,
   collectionName: PropTypes.string.isRequired
 };

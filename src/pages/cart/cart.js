@@ -1,4 +1,4 @@
-import { bindActionCreators } from '../../../../../AppData/Local/Microsoft/TypeScript/3.4.3/node_modules/redux';
+import { cartActions as actions } from './cartActions';
 import Book from '../../components/book/book';
 import BooksCollection from '../../components/booksCollection/booksCollection';
 import CartBook from '../../components/cartBook/cartBook';
@@ -9,7 +9,6 @@ import Interesting from '../../components/interesting/interesting';
 import Menu from '../../components/menu/menu';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { AddBook, RemoveBook } from '../../actions/actions';
 import './cart.less';
 
 class Cart extends React.Component {
@@ -18,6 +17,7 @@ class Cart extends React.Component {
     this.ClickMenu = this.ClickMenu.bind(this);
     this.getStateSignIn = this.getStateSignIn.bind(this);
     this.getStateSignUp = this.getStateSignUp.bind(this);
+    this.state = { interesting: [] };
   }
 
   state = {
@@ -25,6 +25,12 @@ class Cart extends React.Component {
     modalFlag: false,
     signIn: false,
     signUp: false
+  }
+
+  componentDidMount() {
+    fetch('http://localhost:9090/api/books/get-interesting')
+      .then(res => res.json())
+      .then(json => this.setState({ interesting: json }));
   }
 
   ClickMenu() {
@@ -48,7 +54,7 @@ class Cart extends React.Component {
   }
 
   InterestingList() {
-    return this.props.interesting.map((book) => {
+    return this.state.interesting.map((book) => {
       return (
         <Book addToCart={() => this.props.addToCart(book)} key={book.id} name={book.nameBook} price={book.priceBook} img={book.imgBook} description={book.description} callBack={this.openCloseScreen} close={this.closeScreen}/>
       );
@@ -80,20 +86,14 @@ class Cart extends React.Component {
 
 function bookStateToProps(state) {
   return {
-    cart: state.cart,
-    interesting: state.books.interesting
+    cart: state.cartBooks.cart
   };
 }
 
-function matchDispatchToProps(dispatch) {
-  return bindActionCreators({ addToCart: AddBook, removeToCart: RemoveBook }, dispatch);
-}
-
-export default connect(bookStateToProps, matchDispatchToProps)(Cart);
+export default connect(bookStateToProps, actions)(Cart);
 
 Cart.propTypes = {
   cart: PropTypes.array.isRequired,
-  interesting: PropTypes.array.isRequired,
-  addToCart: PropTypes.func.isRequired,
-  removeToCart: PropTypes.func.isRequired
+  addToCart: PropTypes.func,
+  removeToCart: PropTypes.func
 };

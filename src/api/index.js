@@ -16,4 +16,4 @@ const instance = axios.create({
 
 export const staticURL = `${host}/static`;
 
-export const detectives = async () => instance.get(`${books}/get-books`);
+export const getBooks = async () => instance.get(`${books}/get-books`);
